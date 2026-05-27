@@ -1,0 +1,1600 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CJ Sport Agency — Représentation d'Athlètes d'Excellence</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --noir: #05080f;
+    --charbon: #080d18;
+    --gris-fonce: #0d1525;
+    --gris-moyen: #1a2a45;
+    --gris-clair: #7a8faa;
+    --blanc: #e8edf5;
+    --blanc-pur: #ffffff;
+    --or: #7eb8e8;
+    --or-clair: #aed4f4;
+    --or-fonce: #4a80b5;
+    --accent: #7eb8e8;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--noir);
+    color: var(--blanc);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* CURSEUR CUSTOM */
+  .cursor {
+    position: fixed;
+    width: 8px; height: 8px;
+    background: var(--or);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: width 0.2s, height 0.2s, opacity 0.2s;
+    mix-blend-mode: difference;
+  }
+  .cursor-ring {
+    position: fixed;
+    width: 36px; height: 36px;
+    border: 1px solid var(--or);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9998;
+    transform: translate(-50%, -50%);
+    transition: all 0.12s ease;
+    opacity: 0.6;
+  }
+  body:hover .cursor { opacity: 1; }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2rem 4rem;
+    mix-blend-mode: normal;
+    transition: background 0.4s, padding 0.4s;
+  }
+  nav.scrolled {
+    background: rgba(10,10,10,0.95);
+    padding: 1.2rem 4rem;
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(126,184,232,0.15);
+  }
+  .nav-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.6rem;
+    letter-spacing: 0.15em;
+    color: var(--blanc);
+    text-decoration: none;
+  }
+  .nav-logo span { color: var(--or); }
+  .nav-links {
+    display: flex;
+    gap: 3rem;
+    list-style: none;
+  }
+  .nav-links a {
+    text-decoration: none;
+    color: var(--gris-clair);
+    font-size: 0.78rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    transition: color 0.3s;
+    position: relative;
+  }
+  .nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: var(--or);
+    transition: width 0.3s;
+  }
+  .nav-links a:hover { color: var(--or); }
+  .nav-links a:hover::after { width: 100%; }
+  .nav-cta {
+    background: transparent;
+    border: 1px solid var(--or);
+    color: var(--or);
+    padding: 0.65rem 1.8rem;
+    font-size: 0.75rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    cursor: none;
+    transition: background 0.3s, color 0.3s;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 400;
+    text-decoration: none;
+  }
+  .nav-cta:hover {
+    background: var(--or);
+    color: var(--noir);
+  }
+
+  /* HERO */
+  #hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: flex-end;
+    position: relative;
+    overflow: hidden;
+    padding: 0 4rem 8rem;
+  }
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background: 
+      radial-gradient(ellipse 60% 50% at 80% 30%, rgba(126,184,232,0.06) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 60% at 20% 70%, rgba(126,184,232,0.04) 0%, transparent 60%),
+      linear-gradient(160deg, #0f0f0f 0%, #0a0a0a 50%, #06090f 100%);
+  }
+  .hero-lines {
+    position: absolute;
+    inset: 0;
+    background-image: repeating-linear-gradient(
+      90deg,
+      rgba(126,184,232,0.03) 0px,
+      rgba(126,184,232,0.03) 1px,
+      transparent 1px,
+      transparent 10%
+    );
+  }
+  .hero-number {
+    position: absolute;
+    top: 50%;
+    right: 4rem;
+    transform: translateY(-50%);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28vw;
+    line-height: 1;
+    color: rgba(255,255,255,0.025);
+    letter-spacing: -0.05em;
+    pointer-events: none;
+    user-select: none;
+  }
+  .hero-tagline {
+    position: absolute;
+    top: 38%;
+    right: 4rem;
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1.05rem;
+    color: var(--or);
+    letter-spacing: 0.08em;
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    opacity: 0.8;
+  }
+  .hero-content { position: relative; z-index: 2; max-width: 900px; }
+  .hero-eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+    margin-bottom: 2rem;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.3s forwards;
+  }
+  .hero-eyebrow-line {
+    width: 50px;
+    height: 1px;
+    background: var(--or);
+  }
+  .hero-eyebrow-text {
+    font-size: 0.72rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--or);
+  }
+  .hero-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(4.5rem, 10vw, 10rem);
+    line-height: 0.9;
+    letter-spacing: 0.02em;
+    opacity: 0;
+    animation: fadeUp 0.9s 0.5s forwards;
+  }
+  .hero-title .line-1 { color: var(--blanc); }
+  .hero-title .line-2 {
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(240,237,230,0.3);
+  }
+  .hero-title .line-3 { color: var(--or); }
+  .hero-subtitle {
+    margin-top: 2.5rem;
+    max-width: 500px;
+    font-size: 1rem;
+    line-height: 1.8;
+    color: var(--gris-clair);
+    font-weight: 300;
+    opacity: 0;
+    animation: fadeUp 0.9s 0.7s forwards;
+  }
+  .hero-actions {
+    margin-top: 3rem;
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+    opacity: 0;
+    animation: fadeUp 0.9s 0.9s forwards;
+  }
+  .btn-primary {
+    background: var(--or);
+    color: var(--noir);
+    padding: 1rem 2.8rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    border: none;
+    cursor: none;
+    text-decoration: none;
+    transition: background 0.3s, transform 0.2s;
+    display: inline-block;
+  }
+  .btn-primary:hover {
+    background: var(--or-clair);
+    transform: translateY(-2px);
+  }
+  .btn-ghost {
+    color: var(--blanc);
+    font-size: 0.78rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    transition: color 0.3s, gap 0.3s;
+  }
+  .btn-ghost::after {
+    content: '→';
+    font-size: 1rem;
+    transition: transform 0.3s;
+  }
+  .btn-ghost:hover { color: var(--or); gap: 1.2rem; }
+  .btn-ghost:hover::after { transform: translateX(4px); }
+
+  /* SCROLL INDICATOR */
+  .scroll-indicator {
+    position: absolute;
+    bottom: 3rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    opacity: 0;
+    animation: fadeIn 1s 1.5s forwards;
+  }
+  .scroll-indicator span {
+    font-size: 0.65rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gris-clair);
+  }
+  .scroll-line {
+    width: 1px;
+    height: 60px;
+    background: linear-gradient(to bottom, var(--or), transparent);
+    animation: scrollLine 2s infinite;
+  }
+  @keyframes scrollLine {
+    0% { transform: scaleY(0); transform-origin: top; }
+    50% { transform: scaleY(1); transform-origin: top; }
+    51% { transform: scaleY(1); transform-origin: bottom; }
+    100% { transform: scaleY(0); transform-origin: bottom; }
+  }
+
+  /* STATS STRIP */
+  #stats {
+    background: var(--gris-fonce);
+    border-top: 1px solid rgba(126,184,232,0.15);
+    border-bottom: 1px solid rgba(126,184,232,0.15);
+    padding: 3rem 4rem;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+  }
+  .stat-item {
+    text-align: center;
+    padding: 1rem;
+    border-right: 1px solid rgba(126,184,232,0.12);
+  }
+  .stat-item:last-child { border-right: none; }
+  .stat-number {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 3.5rem;
+    color: var(--or);
+    line-height: 1;
+  }
+  .stat-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gris-clair);
+    margin-top: 0.4rem;
+  }
+
+  /* MANIFESTO */
+  #manifesto {
+    padding: 10rem 4rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8rem;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .manifesto-eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2.5rem;
+  }
+  .eyebrow-line { width: 40px; height: 1px; background: var(--or); }
+  .eyebrow-text {
+    font-size: 0.7rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--or);
+  }
+  .manifesto-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.5rem, 4vw, 3.8rem);
+    font-weight: 300;
+    line-height: 1.2;
+    color: var(--blanc);
+  }
+  .manifesto-title em {
+    font-style: italic;
+    color: var(--or);
+  }
+  .manifesto-body {
+    font-size: 1rem;
+    line-height: 1.9;
+    color: rgba(240,237,230,0.65);
+    font-weight: 300;
+    margin-bottom: 2rem;
+  }
+  .manifesto-right {
+    position: relative;
+  }
+  .manifesto-visual {
+    width: 100%;
+    aspect-ratio: 3/4;
+    background: var(--gris-fonce);
+    position: relative;
+    overflow: hidden;
+  }
+  .manifesto-visual::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: 
+      radial-gradient(ellipse at 50% 30%, rgba(126,184,232,0.08) 0%, transparent 60%),
+      linear-gradient(to bottom, transparent 40%, rgba(10,10,10,0.8) 100%);
+    z-index: 1;
+  }
+  .manifesto-visual-inner {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #080e1a 0%, #05080f 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .visual-icon {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 12rem;
+    color: rgba(126,184,232,0.06);
+    letter-spacing: -0.05em;
+  }
+  .manifesto-visual-caption {
+    position: absolute;
+    bottom: 2rem;
+    left: 2rem;
+    right: 2rem;
+    z-index: 2;
+  }
+  .manifesto-visual-caption p {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1.1rem;
+    color: var(--or);
+  }
+  .manifesto-corner {
+    position: absolute;
+    top: -1.5rem;
+    right: -1.5rem;
+    width: 80px;
+    height: 80px;
+    border-top: 1px solid var(--or);
+    border-right: 1px solid var(--or);
+    opacity: 0.5;
+  }
+
+  /* SERVICES */
+  #services {
+    padding: 8rem 4rem;
+    background: var(--gris-fonce);
+    position: relative;
+  }
+  .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 6rem;
+  }
+  .section-title-group {}
+  .section-link {
+    font-size: 0.75rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--or);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    transition: gap 0.3s;
+  }
+  .section-link:hover { gap: 1rem; }
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2.5rem, 5vw, 5rem);
+    line-height: 1;
+    color: var(--blanc);
+    letter-spacing: 0.03em;
+  }
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+  }
+  .service-card {
+    background: var(--charbon);
+    padding: 3.5rem 3rem;
+    position: relative;
+    overflow: hidden;
+    transition: background 0.4s;
+    group: true;
+  }
+  .service-card::before {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--or);
+    transform: scaleX(0);
+    transition: transform 0.4s;
+  }
+  .service-card:hover { background: #0d1828; }
+  .service-card:hover::before { transform: scaleX(1); }
+  .service-number {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 5rem;
+    color: rgba(126,184,232,0.07);
+    position: absolute;
+    top: 1.5rem;
+    right: 2rem;
+    line-height: 1;
+    transition: color 0.4s;
+  }
+  .service-card:hover .service-number { color: rgba(126,184,232,0.12); }
+  .service-icon {
+    width: 48px;
+    height: 48px;
+    border: 1px solid rgba(126,184,232,0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 2rem;
+    transition: border-color 0.3s, background 0.3s;
+  }
+  .service-card:hover .service-icon {
+    border-color: var(--or);
+    background: rgba(126,184,232,0.1);
+  }
+  .service-icon svg {
+    width: 22px;
+    height: 22px;
+    stroke: var(--or);
+    fill: none;
+    stroke-width: 1.5;
+  }
+  .service-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.6rem;
+    letter-spacing: 0.08em;
+    color: var(--blanc);
+    margin-bottom: 1rem;
+  }
+  .service-desc {
+    font-size: 0.88rem;
+    line-height: 1.8;
+    color: rgba(240,237,230,0.5);
+    font-weight: 300;
+  }
+
+  /* ATHLETES */
+  #athletes {
+    padding: 8rem 4rem;
+    background: var(--noir);
+  }
+  .athletes-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 3rem;
+    margin-top: 5rem;
+  }
+  .athlete-card {
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 4/5;
+    background: var(--gris-fonce);
+    cursor: none;
+  }
+  .athlete-bg {
+    position: absolute;
+    inset: 0;
+    transition: transform 0.6s ease;
+  }
+  .athlete-card:hover .athlete-bg { transform: scale(1.04); }
+  .athlete-gradient {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, transparent 20%, rgba(10,10,10,0.95) 100%);
+    z-index: 1;
+  }
+  .athlete-content {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    z-index: 2;
+    padding: 3rem;
+  }
+  .athlete-discipline {
+    display: inline-block;
+    font-size: 0.65rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--or);
+    border: 1px solid rgba(126,184,232,0.4);
+    padding: 0.3rem 0.8rem;
+    margin-bottom: 1rem;
+  }
+  .athlete-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 3rem;
+    letter-spacing: 0.04em;
+    color: var(--blanc);
+    line-height: 1;
+    margin-bottom: 0.6rem;
+  }
+  .athlete-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1rem;
+    color: rgba(240,237,230,0.6);
+    margin-bottom: 1.5rem;
+  }
+  .athlete-stats {
+    display: flex;
+    gap: 2rem;
+    margin-bottom: 2rem;
+  }
+  .athlete-stat {}
+  .athlete-stat-val {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.6rem;
+    color: var(--or);
+    line-height: 1;
+  }
+  .athlete-stat-key {
+    font-size: 0.65rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(240,237,230,0.4);
+  }
+  .athlete-visual-bg {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+  .athlete-initials {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 18rem;
+    color: rgba(255,255,255,0.03);
+    letter-spacing: -0.05em;
+    position: absolute;
+  }
+  .athlete-visual-pattern {
+    position: absolute;
+    inset: 0;
+  }
+  .athlete-romain .athlete-visual-bg {
+    background: linear-gradient(135deg, #06101e 0%, #091525 40%, #040a14 100%);
+  }
+  .athlete-leo .athlete-visual-bg {
+    background: linear-gradient(135deg, #050c18 0%, #08101e 40%, #030708 100%);
+  }
+
+  /* DISCIPLINES */
+  #disciplines {
+    padding: 8rem 0;
+    background: var(--gris-fonce);
+    overflow: hidden;
+  }
+  .disciplines-header {
+    padding: 0 4rem;
+    margin-bottom: 5rem;
+  }
+  .disciplines-scroll {
+    display: flex;
+    gap: 2px;
+    overflow-x: auto;
+    padding: 0 4rem;
+    scrollbar-width: none;
+  }
+  .disciplines-scroll::-webkit-scrollbar { display: none; }
+  .discipline-block {
+    flex-shrink: 0;
+    width: 340px;
+    height: 480px;
+    background: var(--charbon);
+    position: relative;
+    overflow: hidden;
+    transition: width 0.5s ease;
+    cursor: none;
+  }
+  .discipline-block:hover { width: 420px; }
+  .discipline-bg {
+    position: absolute;
+    inset: 0;
+    transition: transform 0.6s ease;
+  }
+  .discipline-block:hover .discipline-bg { transform: scale(1.06); }
+  .discipline-block-1 .discipline-bg {
+    background: linear-gradient(160deg, #080e1a 0%, #0d1a30 60%, #050a14 100%);
+  }
+  .discipline-block-2 .discipline-bg {
+    background: linear-gradient(160deg, #060c18 0%, #091422 60%, #040810 100%);
+  }
+  .discipline-block-3 .discipline-bg {
+    background: linear-gradient(160deg, #080e1a 0%, #0f1c35 60%, #050b18 100%);
+  }
+  .discipline-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, transparent 30%, rgba(10,10,10,0.9) 100%);
+    z-index: 1;
+  }
+  .discipline-content {
+    position: absolute;
+    bottom: 3rem;
+    left: 2.5rem;
+    right: 2.5rem;
+    z-index: 2;
+  }
+  .discipline-icon-large {
+    font-size: 6rem;
+    opacity: 0.06;
+    position: absolute;
+    top: 2rem;
+    right: 2rem;
+    line-height: 1;
+  }
+  .discipline-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.2rem;
+    letter-spacing: 0.05em;
+    color: var(--blanc);
+    margin-bottom: 0.5rem;
+  }
+  .discipline-desc {
+    font-size: 0.82rem;
+    line-height: 1.7;
+    color: rgba(240,237,230,0.5);
+    opacity: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: opacity 0.4s, max-height 0.4s;
+  }
+  .discipline-block:hover .discipline-desc {
+    opacity: 1;
+    max-height: 200px;
+  }
+  .discipline-tag {
+    display: inline-block;
+    font-size: 0.62rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--or);
+    border-bottom: 1px solid rgba(126,184,232,0.4);
+    padding-bottom: 0.2rem;
+    margin-bottom: 1rem;
+  }
+
+  /* PARTENAIRES */
+  #partenaires {
+    padding: 6rem 4rem;
+    background: var(--noir);
+    text-align: center;
+  }
+  .partners-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: rgba(240,237,230,0.3);
+    margin-bottom: 3rem;
+  }
+  .partners-logos {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 4rem;
+    flex-wrap: wrap;
+  }
+  .partner-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.4rem;
+    letter-spacing: 0.2em;
+    color: rgba(240,237,230,0.15);
+    transition: color 0.3s;
+  }
+  .partner-logo:hover { color: rgba(240,237,230,0.5); }
+
+  /* APPROCHE */
+  #approche {
+    padding: 10rem 4rem;
+    background: var(--charbon);
+    position: relative;
+    overflow: hidden;
+  }
+  .approche-bg-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 25vw;
+    color: rgba(255,255,255,0.018);
+    white-space: nowrap;
+    pointer-events: none;
+    letter-spacing: -0.04em;
+  }
+  .approche-inner {
+    position: relative;
+    z-index: 2;
+    max-width: 900px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  .approche-quote {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    font-weight: 300;
+    line-height: 1.35;
+    color: var(--blanc);
+    margin-bottom: 3rem;
+  }
+  .approche-quote em {
+    font-style: italic;
+    color: var(--or);
+  }
+  .approche-author {
+    font-size: 0.72rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gris-clair);
+  }
+  .approche-steps {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 4rem;
+    margin-top: 7rem;
+  }
+  .step {
+    text-align: left;
+    border-top: 1px solid rgba(126,184,232,0.2);
+    padding-top: 2rem;
+    position: relative;
+  }
+  .step-number {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1rem;
+    color: var(--or);
+    letter-spacing: 0.2em;
+    margin-bottom: 1.2rem;
+  }
+  .step-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.6rem;
+    color: var(--blanc);
+    margin-bottom: 1rem;
+    letter-spacing: 0.05em;
+  }
+  .step-text {
+    font-size: 0.87rem;
+    line-height: 1.8;
+    color: rgba(240,237,230,0.5);
+  }
+
+  /* CONTACT */
+  #contact {
+    padding: 8rem 4rem;
+    background: var(--gris-fonce);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8rem;
+    align-items: center;
+  }
+  .contact-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(3rem, 5vw, 5.5rem);
+    line-height: 0.95;
+    color: var(--blanc);
+    margin-bottom: 2rem;
+    letter-spacing: 0.02em;
+  }
+  .contact-title span { color: var(--or); }
+  .contact-body {
+    font-size: 0.95rem;
+    line-height: 1.8;
+    color: rgba(240,237,230,0.55);
+    margin-bottom: 3rem;
+  }
+  .contact-info-item {
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+    margin-bottom: 1.5rem;
+  }
+  .contact-info-icon {
+    width: 40px;
+    height: 40px;
+    border: 1px solid rgba(126,184,232,0.25);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .contact-info-icon svg {
+    width: 18px; height: 18px;
+    stroke: var(--or);
+    fill: none;
+    stroke-width: 1.5;
+  }
+  .contact-info-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gris-clair);
+    margin-bottom: 0.15rem;
+  }
+  .contact-info-value {
+    font-size: 0.9rem;
+    color: var(--blanc);
+  }
+  .contact-form {}
+  .form-group { margin-bottom: 1.5rem; }
+  .form-label {
+    display: block;
+    font-size: 0.68rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gris-clair);
+    margin-bottom: 0.6rem;
+  }
+  .form-input, .form-textarea, .form-select {
+    width: 100%;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(126,184,232,0.15);
+    color: var(--blanc);
+    padding: 0.9rem 1.2rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 300;
+    outline: none;
+    transition: border-color 0.3s, background 0.3s;
+    appearance: none;
+    -webkit-appearance: none;
+  }
+  .form-input:focus, .form-textarea:focus, .form-select:focus {
+    border-color: rgba(126,184,232,0.5);
+    background: rgba(255,255,255,0.06);
+  }
+  .form-input::placeholder, .form-textarea::placeholder {
+    color: rgba(240,237,230,0.25);
+  }
+  .form-textarea { resize: none; height: 140px; }
+  .form-select option { background: var(--gris-fonce); }
+  .form-submit {
+    width: 100%;
+    background: var(--or);
+    color: var(--noir);
+    border: none;
+    padding: 1.1rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    cursor: none;
+    transition: background 0.3s, transform 0.2s;
+  }
+  .form-submit:hover {
+    background: var(--or-clair);
+    transform: translateY(-1px);
+  }
+
+  /* FOOTER */
+  footer {
+    background: var(--noir);
+    border-top: 1px solid rgba(126,184,232,0.1);
+    padding: 4rem 4rem 2.5rem;
+  }
+  .footer-top {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 4rem;
+    margin-bottom: 4rem;
+  }
+  .footer-brand .nav-logo {
+    font-size: 2rem;
+    display: block;
+    margin-bottom: 1.2rem;
+  }
+  .footer-tagline {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1rem;
+    color: rgba(240,237,230,0.4);
+    line-height: 1.6;
+    max-width: 320px;
+  }
+  .footer-col-title {
+    font-size: 0.68rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--or);
+    margin-bottom: 1.5rem;
+  }
+  .footer-links { list-style: none; }
+  .footer-links li { margin-bottom: 0.8rem; }
+  .footer-links a {
+    text-decoration: none;
+    font-size: 0.87rem;
+    color: rgba(240,237,230,0.45);
+    transition: color 0.3s;
+  }
+  .footer-links a:hover { color: var(--blanc); }
+  .footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(255,255,255,0.06);
+  }
+  .footer-copy {
+    font-size: 0.75rem;
+    color: rgba(240,237,230,0.25);
+    letter-spacing: 0.08em;
+  }
+  .footer-social {
+    display: flex;
+    gap: 1.5rem;
+  }
+  .footer-social a {
+    font-size: 0.68rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(240,237,230,0.3);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  .footer-social a:hover { color: var(--or); }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+  .reveal-delay-4 { transition-delay: 0.4s; }
+
+  /* OR DIVIDER */
+  .or-divider {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+  }
+  .or-divider-line { flex: 1; height: 1px; background: rgba(126,184,232,0.2); }
+  .or-divider-diamond {
+    width: 6px; height: 6px;
+    background: var(--or);
+    transform: rotate(45deg);
+  }
+
+  @media (max-width: 1024px) {
+    nav { padding: 1.5rem 2rem; }
+    nav.scrolled { padding: 1rem 2rem; }
+    #hero { padding: 0 2rem 6rem; }
+    #stats { grid-template-columns: repeat(2, 1fr); padding: 3rem 2rem; }
+    #manifesto { grid-template-columns: 1fr; gap: 4rem; padding: 6rem 2rem; }
+    .services-grid { grid-template-columns: 1fr; }
+    .athletes-grid { grid-template-columns: 1fr; }
+    #disciplines { padding: 6rem 0; }
+    .disciplines-header { padding: 0 2rem; }
+    .disciplines-scroll { padding: 0 2rem; }
+    #contact { grid-template-columns: 1fr; gap: 4rem; padding: 6rem 2rem; }
+    #approche { padding: 6rem 2rem; }
+    .approche-steps { grid-template-columns: 1fr; gap: 2rem; }
+    footer { padding: 3rem 2rem 2rem; }
+    .footer-top { grid-template-columns: 1fr; gap: 2.5rem; }
+    .nav-links { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- NAV -->
+<nav id="mainNav">
+  <a href="#" class="nav-logo">CJ<span>.</span>SPORT</a>
+  <ul class="nav-links">
+    <li><a href="#manifesto">L'Agence</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#athletes">Athlètes</a></li>
+    <li><a href="#disciplines">Disciplines</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="#contact" class="nav-cta">Nous rejoindre</a>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-lines"></div>
+  <div class="hero-number">CJ</div>
+  <div class="hero-tagline">Excellence · Performance · Ambition</div>
+
+  <div class="hero-content">
+    <div class="hero-eyebrow">
+      <div class="hero-eyebrow-line"></div>
+      <span class="hero-eyebrow-text">Agence de représentation sportive</span>
+    </div>
+    <h1 class="hero-title">
+      <span class="line-1">PORTER</span><br>
+      <span class="line-2">L'EXCELLENCE</span><br>
+      <span class="line-3">PLUS LOIN.</span>
+    </h1>
+    <p class="hero-subtitle">
+      CJ Sport Agency représente des athlètes de haut niveau dans les disciplines de montagne et d'endurance. Nous construisons les carrières, les partenariats, et les histoires qui durent.
+    </p>
+    <div class="hero-actions">
+      <a href="#athletes" class="btn-primary">Nos athlètes</a>
+      <a href="#manifesto" class="btn-ghost">Découvrir l'agence</a>
+    </div>
+  </div>
+
+  <div class="scroll-indicator">
+    <div class="scroll-line"></div>
+    <span>Défiler</span>
+  </div>
+</section>
+
+<!-- STATS -->
+<div id="stats">
+  <div class="stat-item reveal">
+    <div class="stat-number">2026</div>
+    <div class="stat-label">Champion de France Trail</div>
+  </div>
+  <div class="stat-item reveal reveal-delay-1">
+    <div class="stat-number">15+</div>
+    <div class="stat-label">Partenaires actifs</div>
+  </div>
+  <div class="stat-item reveal reveal-delay-2">
+    <div class="stat-number">3</div>
+    <div class="stat-label">Disciplines d'élite</div>
+  </div>
+  <div class="stat-item reveal reveal-delay-3">
+    <div class="stat-number">100%</div>
+    <div class="stat-label">Accompagnement personnalisé</div>
+  </div>
+</div>
+
+<!-- MANIFESTO -->
+<section id="manifesto">
+  <div>
+    <div class="manifesto-eyebrow reveal">
+      <div class="eyebrow-line"></div>
+      <span class="eyebrow-text">Notre philosophie</span>
+    </div>
+    <h2 class="manifesto-title reveal">
+      Une agence construite sur<br>
+      <em>la confiance</em> et<br>
+      la performance.
+    </h2>
+    <p class="manifesto-body reveal reveal-delay-1">
+      CJ Sport Agency est née d'une conviction simple : les athlètes d'excellence méritent un accompagnement à la hauteur de leurs ambitions. Nous ne nous contentons pas de gérer des carrières — nous les construisons, brique par brique, avec une vision long terme.
+    </p>
+    <p class="manifesto-body reveal reveal-delay-2">
+      De la négociation des partenariats à la gestion de l'image, en passant par le développement de marque personnelle, notre équipe est aux côtés de chaque athlète à chaque étape décisive.
+    </p>
+    <a href="#contact" class="btn-ghost reveal reveal-delay-3">Travailler ensemble</a>
+  </div>
+  <div class="manifesto-right reveal">
+    <div class="manifesto-corner"></div>
+    <div class="manifesto-visual">
+      <div class="manifesto-visual-inner">
+        <span class="visual-icon">▲</span>
+      </div>
+    </div>
+    <div class="manifesto-visual-caption">
+      <p>« L'excellence n'est pas un acte, c'est une habitude. »</p>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="section-header reveal">
+    <div class="section-title-group">
+      <div class="or-divider">
+        <div class="or-divider-line"></div>
+        <div class="or-divider-diamond"></div>
+      </div>
+      <h2 class="section-title">NOS<br>SERVICES</h2>
+    </div>
+    <a href="#contact" class="section-link">Discutons de votre projet →</a>
+  </div>
+
+  <div class="services-grid">
+    <div class="service-card reveal">
+      <span class="service-number">01</span>
+      <div class="service-icon">
+        <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+      </div>
+      <div class="service-name">Représentation</div>
+      <p class="service-desc">Gestion complète de carrière, négociation de contrats, conseil sportif et protection des intérêts de l'athlète sur tous les fronts.</p>
+    </div>
+    <div class="service-card reveal reveal-delay-1">
+      <span class="service-number">02</span>
+      <div class="service-icon">
+        <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+      </div>
+      <div class="service-name">Partenariats Marques</div>
+      <p class="service-desc">Identification, prospection et négociation de partenariats avec des marques alignées aux valeurs et à l'image de l'athlète.</p>
+    </div>
+    <div class="service-card reveal reveal-delay-2">
+      <span class="service-number">03</span>
+      <div class="service-icon">
+        <svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+      </div>
+      <div class="service-name">Communication</div>
+      <p class="service-desc">Stratégie éditoriale, gestion des réseaux sociaux, création de contenu et relations presse pour développer la notoriété.</p>
+    </div>
+    <div class="service-card reveal reveal-delay-1">
+      <span class="service-number">04</span>
+      <div class="service-icon">
+        <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+      </div>
+      <div class="service-name">Performance & Suivi</div>
+      <p class="service-desc">Accompagnement dans la planification de la saison, coordination avec le staff technique, suivi des objectifs sportifs.</p>
+    </div>
+    <div class="service-card reveal reveal-delay-2">
+      <span class="service-number">05</span>
+      <div class="service-icon">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+      </div>
+      <div class="service-name">Dossiers & Stratégie</div>
+      <p class="service-desc">Conception de dossiers de sponsoring professionnels, construction de la valeur de marque athlète et stratégie de développement.</p>
+    </div>
+    <div class="service-card reveal reveal-delay-3">
+      <span class="service-number">06</span>
+      <div class="service-icon">
+        <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 014.36 11a19.79 19.79 0 01-3.07-8.67A2 2 0 013.27 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>
+      </div>
+      <div class="service-name">Réseau & Opportunités</div>
+      <p class="service-desc">Accès à un réseau exclusif de marques, d'organisateurs d'événements et d'acteurs du sport de haut niveau en France et à l'international.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ATHLETES -->
+<section id="athletes">
+  <div class="section-header reveal">
+    <div class="section-title-group">
+      <div class="or-divider">
+        <div class="or-divider-line"></div>
+        <div class="or-divider-diamond"></div>
+      </div>
+      <h2 class="section-title">NOS<br>ATHLÈTES</h2>
+    </div>
+    <a href="#contact" class="section-link">Rejoindre l'agence →</a>
+  </div>
+
+  <div class="athletes-grid">
+    <!-- Romain Discher -->
+    <div class="athlete-card athlete-romain reveal">
+      <div class="athlete-bg">
+        <div class="athlete-visual-bg">
+          <span class="athlete-initials">RD</span>
+          <div class="athlete-visual-pattern"></div>
+        </div>
+      </div>
+      <div class="athlete-gradient"></div>
+      <div class="athlete-content">
+        <span class="athlete-discipline">Trail & Course de Montagne</span>
+        <div class="athlete-name">ROMAIN<br>DISCHER</div>
+        <div class="athlete-title">Champion de France 2026 · Guide Michel Munsch</div>
+        <div class="athlete-stats">
+          <div class="athlete-stat">
+            <div class="athlete-stat-val">2026</div>
+            <div class="athlete-stat-key">Champion FR</div>
+          </div>
+          <div class="athlete-stat">
+            <div class="athlete-stat-val">Top 5</div>
+            <div class="athlete-stat-key">EDF Podiums</div>
+          </div>
+          <div class="athlete-stat">
+            <div class="athlete-stat-val">15+</div>
+            <div class="athlete-stat-key">Victoires</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Léo Carlier -->
+    <div class="athlete-card athlete-leo reveal reveal-delay-1">
+      <div class="athlete-bg">
+        <div class="athlete-visual-bg">
+          <span class="athlete-initials">LC</span>
+        </div>
+      </div>
+      <div class="athlete-gradient"></div>
+      <div class="athlete-content">
+        <span class="athlete-discipline">Biathlon · Ski de Fond</span>
+        <div class="athlete-name">LÉO<br>CARLIER</div>
+        <div class="athlete-title">Équipe de France B Biathlon</div>
+        <div class="athlete-stats">
+          <div class="athlete-stat">
+            <div class="athlete-stat-val">EDF B</div>
+            <div class="athlete-stat-key">Niveau</div>
+          </div>
+          <div class="athlete-stat">
+            <div class="athlete-stat-val">Elite</div>
+            <div class="athlete-stat-key">Compétiteur</div>
+          </div>
+          <div class="athlete-stat">
+            <div class="athlete-stat-val">IBU</div>
+            <div class="athlete-stat-key">Circut</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DISCIPLINES -->
+<section id="disciplines">
+  <div class="disciplines-header">
+    <div class="or-divider reveal">
+      <div class="or-divider-line"></div>
+      <div class="or-divider-diamond"></div>
+      <div class="or-divider-line"></div>
+    </div>
+    <h2 class="section-title reveal">DISCIPLINES</h2>
+  </div>
+
+  <div class="disciplines-scroll">
+    <div class="discipline-block discipline-block-1">
+      <div class="discipline-bg"></div>
+      <div class="discipline-overlay"></div>
+      <span class="discipline-icon-large">▲</span>
+      <div class="discipline-content">
+        <span class="discipline-tag">Montagne</span>
+        <div class="discipline-name">TRAIL &<br>MONTAGNE</div>
+        <p class="discipline-desc">Course à pied en montagne, ultra-trail, course de montagne classique. Des disciplines qui forgent les caractères d'exception.</p>
+      </div>
+    </div>
+    <div class="discipline-block discipline-block-2">
+      <div class="discipline-bg"></div>
+      <div class="discipline-overlay"></div>
+      <span class="discipline-icon-large">❄</span>
+      <div class="discipline-content">
+        <span class="discipline-tag">Hiver</span>
+        <div class="discipline-name">BIATHLON</div>
+        <p class="discipline-desc">La discipline alliance de la précision et de l'endurance, pratiquée au plus haut niveau sur le circuit IBU et Coupe du Monde.</p>
+      </div>
+    </div>
+    <div class="discipline-block discipline-block-3">
+      <div class="discipline-bg"></div>
+      <div class="discipline-overlay"></div>
+      <span class="discipline-icon-large">⛷</span>
+      <div class="discipline-content">
+        <span class="discipline-tag">Nordic</span>
+        <div class="discipline-name">SKI<br>DE FOND</div>
+        <p class="discipline-desc">Le fond nordique dans sa forme pure. Endurance extrême, technique et dépassement de soi sur les circuits FFS et internationaux.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PARTENAIRES -->
+<div id="partenaires">
+  <p class="partners-label reveal">Partenaires & marques de confiance</p>
+  <div class="partners-logos reveal">
+    <span class="partner-logo">SHOKZ</span>
+    <span class="partner-logo">SUUNTO</span>
+    <span class="partner-logo">OVERSTIM.S</span>
+    <span class="partner-logo">VOLKSWAGEN</span>
+    <span class="partner-logo">PEUGEOT</span>
+    <span class="partner-logo">CORUM</span>
+  </div>
+</div>
+
+<!-- APPROCHE -->
+<section id="approche">
+  <div class="approche-bg-text">EXCELLENCE</div>
+  <div class="approche-inner">
+    <div class="or-divider reveal" style="justify-content: center;">
+      <div class="or-divider-line" style="max-width: 80px;"></div>
+      <div class="or-divider-diamond"></div>
+      <div class="or-divider-line" style="max-width: 80px;"></div>
+    </div>
+    <blockquote class="approche-quote reveal">
+      « Nous croyons que <em>chaque athlète</em> porte une histoire unique<br>
+      qui mérite d'être racontée<br>
+      au monde entier. »
+    </blockquote>
+    <p class="approche-author reveal">— CJ Sport Agency</p>
+
+    <div class="approche-steps">
+      <div class="step reveal">
+        <div class="step-number">01 / ÉCOUTER</div>
+        <div class="step-title">Comprendre l'athlète</div>
+        <p class="step-text">Avant tout, nous prenons le temps de comprendre la personne derrière le sportif : ses valeurs, ses ambitions, ses contraintes, son histoire.</p>
+      </div>
+      <div class="step reveal reveal-delay-1">
+        <div class="step-number">02 / CONSTRUIRE</div>
+        <div class="step-title">Bâtir la stratégie</div>
+        <p class="step-text">Nous élaborons une feuille de route personnalisée : développement de partenariats, image de marque, calendrier sportif et objectifs moyen terme.</p>
+      </div>
+      <div class="step reveal reveal-delay-2">
+        <div class="step-number">03 / PERFORMER</div>
+        <div class="step-title">Exécuter avec excellence</div>
+        <p class="step-text">Nous agissons avec la même rigueur qu'un athlète en compétition : chaque action est préparée, mesurée et orientée vers le résultat.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div>
+    <div class="or-divider reveal">
+      <div class="or-divider-line"></div>
+      <div class="or-divider-diamond"></div>
+    </div>
+    <h2 class="contact-title reveal">TRAVAILLONS<br><span>ENSEMBLE</span></h2>
+    <p class="contact-body reveal">Que vous soyez athlète en quête de représentation, une marque cherchant un partenariat authentique, ou un organisateur d'événement, nous sommes à l'écoute.</p>
+
+    <div class="contact-info-item reveal">
+      <div class="contact-info-icon">
+        <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+      </div>
+      <div>
+        <div class="contact-info-label">Email</div>
+        <div class="contact-info-value">contact@cjsportagency.com</div>
+      </div>
+    </div>
+
+    <div class="contact-info-item reveal reveal-delay-1">
+      <div class="contact-info-icon">
+        <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+      </div>
+      <div>
+        <div class="contact-info-label">Localisation</div>
+        <div class="contact-info-value">Pontarlier, Franche-Comté</div>
+      </div>
+    </div>
+
+    <div class="contact-info-item reveal reveal-delay-2">
+      <div class="contact-info-icon">
+        <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 014.36 11a19.79 19.79 0 01-3.07-8.67A2 2 0 013.27 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>
+      </div>
+      <div>
+        <div class="contact-info-label">Téléphone</div>
+        <div class="contact-info-value">Sur demande</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="reveal reveal-delay-1">
+    <div class="form-group">
+      <label class="form-label">Nom complet</label>
+      <input type="text" class="form-input" placeholder="Votre nom">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Email</label>
+      <input type="email" class="form-input" placeholder="votre@email.com">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Vous êtes</label>
+      <select class="form-select">
+        <option value="">Sélectionner votre profil</option>
+        <option>Athlète</option>
+        <option>Représentant de marque</option>
+        <option>Organisateur d'événement</option>
+        <option>Journaliste / Presse</option>
+        <option>Autre</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Message</label>
+      <textarea class="form-textarea" placeholder="Décrivez votre projet ou votre demande…"></textarea>
+    </div>
+    <button class="form-submit">Envoyer le message</button>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <a href="#" class="nav-logo">CJ<span>.</span>SPORT AGENCY</a>
+      <p class="footer-tagline">
+        Représentation d'athlètes d'excellence dans les sports de montagne et d'endurance.
+      </p>
+    </div>
+    <div>
+      <p class="footer-col-title">Navigation</p>
+      <ul class="footer-links">
+        <li><a href="#manifesto">L'agence</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#athletes">Athlètes</a></li>
+        <li><a href="#disciplines">Disciplines</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="footer-col-title">Disciplines</p>
+      <ul class="footer-links">
+        <li><a href="#disciplines">Trail & Montagne</a></li>
+        <li><a href="#disciplines">Biathlon</a></li>
+        <li><a href="#disciplines">Ski de Fond</a></li>
+        <li><a href="#disciplines">Course d'Orientation</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span class="footer-copy">© 2026 CJ Sport Agency — Tous droits réservés</span>
+    <div class="footer-social">
+      <a href="#">Instagram</a>
+      <a href="#">LinkedIn</a>
+      <a href="#">Facebook</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Curseur custom
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+  let mouseX = 0, mouseY = 0, ringX = 0, ringY = 0;
+
+  document.addEventListener('mousemove', e => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+    cursor.style.left = mouseX + 'px';
+    cursor.style.top = mouseY + 'px';
+  });
+
+  function animateRing() {
+    ringX += (mouseX - ringX) * 0.12;
+    ringY += (mouseY - ringY) * 0.12;
+    ring.style.left = ringX + 'px';
+    ring.style.top = ringY + 'px';
+    requestAnimationFrame(animateRing);
+  }
+  animateRing();
+
+  document.querySelectorAll('a, button, .service-card, .athlete-card, .discipline-block').forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      cursor.style.width = '16px';
+      cursor.style.height = '16px';
+      ring.style.width = '54px';
+      ring.style.height = '54px';
+    });
+    el.addEventListener('mouseleave', () => {
+      cursor.style.width = '8px';
+      cursor.style.height = '8px';
+      ring.style.width = '36px';
+      ring.style.height = '36px';
+    });
+  });
+
+  // Nav scroll
+  const nav = document.getElementById('mainNav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 80);
+  });
+
+  // Reveal on scroll
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => observer.observe(el));
+
+  // Smooth scroll pour les ancres
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const target = document.querySelector(a.getAttribute('href'));
+      if (target) {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+
+  // Form submit
+  document.querySelector('.form-submit').addEventListener('click', function() {
+    this.textContent = 'Message envoyé ✓';
+    this.style.background = 'var(--or-fonce)';
+    setTimeout(() => {
+      this.textContent = 'Envoyer le message';
+      this.style.background = '';
+    }, 3000);
+  });
+</script>
+</body>
+</html>
